@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8080
 
 # Start appen
-CMD ["node", "node_mandatory_I/app.js"]
+CMD ["node", "app.js"]
