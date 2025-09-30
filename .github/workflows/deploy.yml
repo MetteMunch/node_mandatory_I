@@ -10,22 +10,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # ... (andre steps)
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build Docker image
-        # ÆNDRET HER: Brug toLower()
-        run: docker build -t ghcr.io/${{ toLower(github.repository) }}/opslagstavle-app:latest .
+        run: docker build -t ghcr.io/mettemunch/node_mandatory_i:latest .
 
       - name: Push Docker image
-        # ÆNDRET HER: Brug toLower()
-        run: docker push ghcr.io/${{ toLower(github.repository) }}/opslagstavle-app:latest
+        run: docker push ghcr.io/mettemunch/node_mandatory_i:latest 
 
   deploy:
     runs-on: ubuntu-latest
     needs: build-and-push
 
     steps:
-      # ... (andre steps)
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
 
       - name: Deploy on Hetzner VM
         run: |
@@ -38,8 +43,6 @@ jobs:
           docker rm opslagstavle-app || true
 
           # Pull and run new container
-          # ÆNDRET HER: Brug toLower()
-          docker pull ghcr.io/${{ toLower(github.repository) }}/opslagstavle-app:latest
-          # ÆNDRET HER: Brug toLower()
-          docker run -d --name opslagstavle-app -p 80:8080 ghcr.io/${{ toLower(github.repository) }}/opslagstavle-app:latest
+          docker pull ghcr.io/mettemunch/node_mandatory_i:latest 
+          docker run -d --name opslagstavle-app -p 80:8080 ghcr.io/mettemunch/node_mandatory_i:latest 
           EOF
