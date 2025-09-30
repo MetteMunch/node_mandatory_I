@@ -1,0 +1,55 @@
+body {
+  font-family: 'Comic Sans MS', 'Patrick Hand', cursive;
+  margin: 0;
+  padding: 0;
+  background: #f0e9dc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  margin: 20px;
+}
+
+.board {
+  position: relative;
+  width: 900px;
+  height: 600px;
+  background: url("/board-bg.jpg") no-repeat center center;
+  background-size: cover;
+  border: 8px solid #8b5a2b;
+  border-radius: 10px;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+}
+
+/* Post-it */
+.note {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  padding: 10px;
+  background: #fffa65;
+  color: #333;
+  text-decoration: none;
+  font-size: 1.1em;
+  font-weight: bold;
+  box-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.note:hover {
+  transform: scale(1.1) rotate(0deg);
+  z-index: 10;
+  box-shadow: 5px 5px 12px rgba(0,0,0,0.5);
+}
+
+/* Forskellige farver */
+.note:nth-child(3n) { background: #ffd36b; }
+.note:nth-child(4n) { background: #a8ffb5; }
+.note:nth-child(5n) { background: #ffb3c6; }
