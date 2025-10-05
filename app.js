@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
 
 // Undersider
 app.get("/:page", (req, res) => {
-  const filePath = path.resolve(`public/pages/${req.params.page}.html`);
+  const filePath = path.resolve(`public/pages/${req.params.page}/${req.params.page}.html`);
   res.sendFile(filePath, err => {
     if (err) res.status(404).send("Siden findes ikke");
   });
