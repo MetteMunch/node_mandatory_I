@@ -1,5 +1,5 @@
 body {
-  font-family: 'Comic Sans MS', 'Patrick Hand', cursive;
+  font-family: "Comic Sans MS", "Patrick Hand", cursive;
   margin: 0;
   padding: 0;
   background: #f0e9dc;
@@ -22,7 +22,7 @@ body {
   background: url("../images/board.jpg") no-repeat center center;
   background-size: cover;
   border-radius: 10px;
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
 
@@ -37,26 +37,34 @@ body {
   text-decoration: none;
   font-size: 1em;
   font-weight: bold;
-  box-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
   border: 1px solid #ddd;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   border-radius: 4px;
 }
 
 .note:hover {
   transform: scale(1.1) rotate(0deg);
   z-index: 10;
-  box-shadow: 5px 5px 12px rgba(0,0,0,0.5);
+  box-shadow: 5px 5px 12px rgba(0, 0, 0, 0.5);
 }
 
 /* Forskellige farver til post-it*/
-.note:nth-child(3n) { background: #ffd36b; }
-.note:nth-child(4n) { background: #a8ffb5; }
-.note:nth-child(5n) { background: #ffb3c6; }
+.note:nth-child(3n) {
+  background: #ffd36b;
+}
+.note:nth-child(4n) {
+  background: #a8ffb5;
+}
+.note:nth-child(5n) {
+  background: #ffb3c6;
+}
 
 /* Prism.js tema (let og venligt til din lyse baggrund) */
 pre[class*="language-"] {
@@ -64,9 +72,9 @@ pre[class*="language-"] {
   color: #333;
   padding: 15px;
   border-radius: 8px;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
   overflow-x: auto;
-  font-family: Consolas, 'Courier New', monospace;
+  font-family: Consolas, "Courier New", monospace;
   margin: 20px 0;
 }
 
@@ -128,6 +136,25 @@ code[class*="language-"] {
 
 .token.builtin {
   color: #005cc5;
+}
+
+.doc-links {
+  display: flex;
+  flex-direction: column; /* sætter links under hinanden */
+  gap: 8px; /* lidt luft mellem dem */
+  margin: 10px 0;
+}
+
+.doc-links a {
+  color: #0074d9;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.doc-links a:hover {
+  color: #0056a3;
+  text-decoration: underline;
 }
 
 /* Responsiv tekst og note-størrelse */

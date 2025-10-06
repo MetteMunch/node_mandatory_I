@@ -17,7 +17,7 @@ export function randomizeNotes() {
     { left: "10%", top: "70%", rot: -4 },
     { left: "35%", top: "72%", rot: 6 },
     { left: "60%", top: "75%", rot: -7 },
-    { left: "75%", top: "80%", rot: 5 }
+    { left: "75%", top: "80%", rot: 5 },
   ];
 
   notes.forEach((note, i) => {
