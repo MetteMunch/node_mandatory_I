@@ -58,6 +58,71 @@ body {
 .note:nth-child(4n) { background: #a8ffb5; }
 .note:nth-child(5n) { background: #ffb3c6; }
 
+/* Prism.js tema (let og venligt til din lyse baggrund) */
+pre[class*="language-"] {
+  background: #fffbe6; /* Lyst “post-it”-agtigt look */
+  color: #333;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  overflow-x: auto;
+  font-family: Consolas, 'Courier New', monospace;
+  margin: 20px 0;
+}
+
+code[class*="language-"] {
+  background: none;
+  color: inherit;
+}
+
+/* Fremhævning af nøgler, strenge osv. */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #708090;
+}
+
+.token.punctuation {
+  color: #333;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol {
+  color: #d14;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char {
+  color: #22863a;
+}
+
+.token.function {
+  color: #005cc5;
+}
+
+.token.keyword {
+  color: #d73a49;
+}
+
+.token.operator {
+  color: #9a6e3a;
+}
+
+.token.class-name {
+  color: #6f42c1;
+}
+
+.token.builtin {
+  color: #005cc5;
+}
+
 /* Responsiv tekst og note-størrelse */
 @media (max-width: 600px) {
   .note {
