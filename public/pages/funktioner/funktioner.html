@@ -26,7 +26,25 @@
 }</code></pre>
 
     <h2>Callback function:</h2>
-    <p>En callback funktion er en funktion, der videregives som et argument til en anden funktion og er beregnet til måske at blive eksekveret senere. I nedenstående er <code>congrats()</code> en callback funktion.</p>
+    <p>En callback funktion er en funktion, der videregives som et argument til en anden funktion og er beregnet til måske at blive eksekveret senere. 
+      I nedenstående er <code>congrats()</code> en callback funktion.</p>
+    <pre><code class="language-javascript">function guessTheNumber(luckyNumber, congrats) {
+  const numberFromDice = rollDice(1, 6);
+
+  if (luckyNumber === numberFromDice) {
+    return congrats(luckyNumber);
+  }
+  return `Sorry it's not the correct number, you picked ${luckyNumber} and the dice shows ${numberFromDice}`;
+}
+
+function congrats(number) {
+  return `Jubiii you gussed correct with number: ${number}`;
+}</code></pre>
+
+
+
+
+
     <a class="back" href="/">⬅ Tilbage til opslagstavlen</a>
   </div>
 

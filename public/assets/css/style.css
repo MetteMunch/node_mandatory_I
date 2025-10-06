@@ -53,7 +53,7 @@ body {
   box-shadow: 5px 5px 12px rgba(0,0,0,0.5);
 }
 
-/* Forskellige farver */
+/* Forskellige farver til post-it*/
 .note:nth-child(3n) { background: #ffd36b; }
 .note:nth-child(4n) { background: #a8ffb5; }
 .note:nth-child(5n) { background: #ffb3c6; }
@@ -73,6 +73,13 @@ pre[class*="language-"] {
 code[class*="language-"] {
   background: none;
   color: inherit;
+}
+
+.content {
+  position: relative;
+  width: 90vw;
+  max-width: 900px;
+  border-radius: 10px;
 }
 
 /* Fremhævning af nøgler, strenge osv. */
