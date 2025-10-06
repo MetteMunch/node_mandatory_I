@@ -1,0 +1,139 @@
+body {
+  font-family: 'Comic Sans MS', 'Patrick Hand', cursive;
+  margin: 0;
+  padding: 0;
+  background: #f0e9dc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  margin: 20px;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.board {
+  position: relative;
+  width: 90vw;
+  max-width: 900px;
+  aspect-ratio: 3 / 2;
+  background: url("../images/board.jpg") no-repeat center center;
+  background-size: cover;
+  border-radius: 10px;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+  overflow: hidden;
+}
+
+/* Post-it */
+.note {
+  position: absolute;
+  width: 15%;
+  aspect-ratio: 1 / 1;
+  padding: 5px;
+  background: #fffa65;
+  color: #333;
+  text-decoration: none;
+  font-size: 1em;
+  font-weight: bold;
+  box-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 4px;
+}
+
+.note:hover {
+  transform: scale(1.1) rotate(0deg);
+  z-index: 10;
+  box-shadow: 5px 5px 12px rgba(0,0,0,0.5);
+}
+
+/* Forskellige farver til post-it*/
+.note:nth-child(3n) { background: #ffd36b; }
+.note:nth-child(4n) { background: #a8ffb5; }
+.note:nth-child(5n) { background: #ffb3c6; }
+
+/* Prism.js tema (let og venligt til din lyse baggrund) */
+pre[class*="language-"] {
+  background: #fffbe6; /* Lyst “post-it”-agtigt look */
+  color: #333;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  overflow-x: auto;
+  font-family: Consolas, 'Courier New', monospace;
+  margin: 20px 0;
+}
+
+code[class*="language-"] {
+  background: none;
+  color: inherit;
+}
+
+.content {
+  position: relative;
+  width: 90vw;
+  max-width: 900px;
+  border-radius: 10px;
+}
+
+/* Fremhævning af nøgler, strenge osv. */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #708090;
+}
+
+.token.punctuation {
+  color: #333;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol {
+  color: #d14;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char {
+  color: #22863a;
+}
+
+.token.function {
+  color: #005cc5;
+}
+
+.token.keyword {
+  color: #d73a49;
+}
+
+.token.operator {
+  color: #9a6e3a;
+}
+
+.token.class-name {
+  color: #6f42c1;
+}
+
+.token.builtin {
+  color: #005cc5;
+}
+
+/* Responsiv tekst og note-størrelse */
+@media (max-width: 600px) {
+  .note {
+    width: 20%;
+    font-size: 0.8em;
+  }
+}

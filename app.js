@@ -7,12 +7,12 @@ app.use(express.static("public"));
 
 // Forside
 app.get("/", (req, res) => {
-  res.sendFile(path.resolve("public/frontend/index.html"));
+  res.sendFile(path.resolve("public/pages/frontend/index.html"));
 });
 
 // Undersider
 app.get("/:page", (req, res) => {
-  const filePath = path.resolve(`public/frontend/${req.params.page}.html`);
+  const filePath = path.resolve(`public/pages/${req.params.page}/${req.params.page}.html`);
   res.sendFile(filePath, err => {
     if (err) res.status(404).send("Siden findes ikke");
   });
