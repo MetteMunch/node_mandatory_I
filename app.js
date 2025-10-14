@@ -5,6 +5,8 @@ const app = express();
 
 app.use(express.static("public"));
 
+/*====================== PAGES ============================*/
+
 // Forside
 app.get("/", (req, res) => {
   res.sendFile(path.resolve("public/pages/frontend/index.html"));
@@ -19,6 +21,9 @@ app.get("/:page", (req, res) => {
     if (err) res.status(404).send("Siden findes ikke");
   });
 });
+
+/*====================== PAGES ============================*/
+
 
 const PORT = 8080;
 app.listen(PORT, () => {

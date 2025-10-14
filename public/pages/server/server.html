@@ -13,9 +13,49 @@
     <div class="content">
       <h1>Server</h1>
 
-      <h2>Overskrift:</h2>
-      <p>Tekst</p>
-      <pre><code class="language-javascript">code-snippet</code></pre>
+      <p>Når vi ønsker at håndtere HTTP anmodninger (requests og 
+        responses), så skal vi bruge en server til dette.
+      </p>
+
+      <h2>Express framework</h2>
+      Express er et populært webframework til Node.js. Når vi opsætter serveren, så gøres dette i en app.js fil, 
+      hvor vi i korte træk importerer biblioteket / Express framework, instantierer/opretter et 
+      Express-applikationsobjekt (app) og angiver hvilken port, serveren skal lytte efter HTTP kald på.
+
+      <h3>Node ES Module</h3>
+
+      <p>Den gængse metode nu er at anvende ES Module, men der vil stadig være meget kode, 
+        som anvender commonJS (se nedenstående kode eksempel med require). Husk for at anvende ES Module, så skal 
+        package.json indeholde: "type": "module".
+      </p>
+
+      <pre><code class="language-javascript">
+      import express from 'express';
+
+      const app = express();
+
+      app.use(express.static("public")); 
+
+      app.get('/', (req, res) => {
+      res.send('Hello World');
+      });
+
+      const PORT = 8080;
+      app.listen(PORT, () => console.log('Server kører på port:', PORT));
+      </code></pre>
+      
+      <h3>CommonJS (ældre standard)</h3>
+      <pre><code class="language-javascript">
+      const express = require('express');
+      const app = express();
+
+      app.get('/', (req, res) => {
+      res.send('Hello World');
+      });
+
+      const PORT = 8080;
+      app.listen(PORT, () => console.log('Server kører på port:', PORT));
+      </code></pre>
 
       <a class="back" href="/">⬅ Tilbage til opslagstavlen</a>
     </div>
