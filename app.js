@@ -12,13 +12,15 @@ app.get("/", (req, res) => {
 
 // Undersider
 app.get("/:page", (req, res) => {
-  const filePath = path.resolve(`public/pages/${req.params.page}/${req.params.page}.html`);
-  res.sendFile(filePath, err => {
+  const filePath = path.resolve(
+    `public/pages/${req.params.page}/${req.params.page}.html`,
+  );
+  res.sendFile(filePath, (err) => {
     if (err) res.status(404).send("Siden findes ikke");
   });
 });
 
 const PORT = 8080;
 app.listen(PORT, () => {
-    console.log("Server is running on port: ", PORT);
-})
+  console.log("Server is running on port: ", PORT);
+});

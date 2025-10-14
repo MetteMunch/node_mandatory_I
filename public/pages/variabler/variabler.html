@@ -1,26 +1,112 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="da">
-<head>
-  <meta charset="UTF-8">
-  <title>Variabler</title>
-  <link rel="stylesheet" href="../../assets/css/style.css">
-  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <head>
+    <meta charset="UTF-8" />
+    <title>Variabler</title>
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="content">
+      <h1>Variabler</h1>
+      <p>
+        En variabel er en form for beholder til noget data af en given type.
+      </p>
+      <p>Datatyperne i JavaScript er:</p>
+      <ul>
+        <li>Number</li>
+        <li>String</li>
+        <li>Boolean</li>
+        <li>Object</li>
+        <li>BigInt</li>
+        <li>Symbol</li>
+        <li>undefined</li>
+        <li>null</li>
+      </ul>
+      <p>
+        Når en variabel navngives (deklareres), så benyttes enten const eller
+        let (undgå var) og navngivning er med camel case:
+      </p>
+      <pre><code class="language-javascript">let myAge;</code></pre>
+      <p>Variablen tildeles en værdi (initialiseres) med et lighedstegn:</p>
+      <pre><code class="language-javascript">myAge = 51;</code></pre>
+      <p>Oftest vil deklarationen og initialiseringen ske samtidig:</p>
+      <pre><code class="language-javascript">let myAge = 51;</code></pre>
+      <p>En const variabel skal naturligvis initialiseres med det samme:</p>
+      <pre><code class="language-javascript">const myName = "Mette";</code></pre>
+      <br />
+      <p>
+        Om variablen skal være const eller let er afhængig af om variablen skal
+        kunne tildeles en ny værdi indenfor samme scope.
+      </p>
 
-</head>
-<body>
-  <div class="content">
-    <h1>Variabler</h1>
+      <p>En let variabel kan få ændret værdien:</p>
+      <pre><code class="language-javascript">let letVar = 1;
+function someFunction() {
+    letVar ++;    
+    console.log(letVar); // output: 2
+}
 
-    <h2>Overskrift:</h2>
-    <p>Tekst</p>
-    <pre><code class="language-javascript">code-snippet
-}</code></pre>
+const constVar = 1;
+function someFunction() {
+    constVar ++;
+    console.log(constVar);   // TypeError: Assignment to constant variable 
+}
+</code></pre>
 
- <a class="back" href="/">⬅ Tilbage til opslagstavlen</a>
-    
-  </div>
+      <p>
+        Men selve indholdet altså elementerne i objekter og arrays kan ændres
+        selvom det er gemt i const variabel:
+      </p>
+      <pre><code class="language-javascript">const array = [1,2,3,4];
+function someFunctionNew() {
+    array.push(5);
+    console.log(array); //output: [1,2,3,4,5]
+}
+</code></pre>
 
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
-</body>
+      <p>Men en ny initialisering er ikke mulig:</p>
+      <pre><code class="language-javascript">const newArray = [1,2,3,4];
+function newFunction() {
+    newArray = [5,6,7];
+    console.log(newArray); // TypeError: Assignment to constant variable
+}
+</code></pre>
+
+      <p>
+        JavaScript er et dynamisk kodesprog, hvor datatypen ikke klart angives
+        på variablen, men afhænger af værdien. Hvilket betyder, at den samme
+        variabel reelt kan bruges til at gemme flere forskellige datatyper. I
+        tvivl om datatypen, så brug eventuelt typeof.
+      </p>
+      <pre><code class="language-javascript">let varType = "String";
+console.log(typeof varType); // output: string
+varType = 256;
+console.log(typeof varType); // output: number
+varType = true;
+console.log(typeof varType); // output: boolean
+varType = { name: "Mette"};
+console.log(typeof varType); // output: object
+</code></pre>
+
+      <p>God forklarende side:</p>
+      <div class="doc-links">
+        <a
+          href="https://brainstation.io/learn/javascript/data-types"
+          target="_blank"
+          rel="noopener noreferrer"
+          >brainstation.io</a
+        >
+      </div>
+      <br />
+
+      <a class="back" href="/">⬅ Tilbage til opslagstavlen</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+  </body>
 </html>

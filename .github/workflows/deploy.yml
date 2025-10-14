@@ -20,7 +20,7 @@ jobs:
         run: docker build -t ghcr.io/mettemunch/node_mandatory_i:latest .
 
       - name: Push Docker image
-        run: docker push ghcr.io/mettemunch/node_mandatory_i:latest 
+        run: docker push ghcr.io/mettemunch/node_mandatory_i:latest
 
   deploy:
     runs-on: ubuntu-latest
