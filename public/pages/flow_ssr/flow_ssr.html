@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Flow og opbygning - Serverside Rendering (SSR)</title>
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="content">
+      <h1>Flow og opbygning - Serverside Rendering (SSR)</h1>
+
+      <p>
+        Dette flow beskriver et **Serverside Rendering (SSR)**-princip i en lille
+        vejr-applikation med **Node.js (Express)** og en
+        **Template Engine** (f.eks. EJS). Hele siden, inklusiv vejrdata,
+        genereres på serveren før den sendes til browseren.
+      </p>
+      <br />
+
+      <h2>1️⃣ Bruger kalder <code>/weather/:city</code></h2>
+      <p>
+        Bruger går ind på fx <code>http://localhost:8080/weather/københavn</code>.
+        Denne route håndteres i vores <code>app.js</code> eller en dedikeret
+        **page-router** på serveren.
+      </p>
+
+      <h2>2️⃣ Serveren henter data og genererer HTML</h2>
+      <p>
+        I modsætning til Client-side Rendering sker **al datahentning** på
+        serveren. Serveren kalder først
+        **<code>weatherUtil.js</code>**, som igen kalder den eksterne vejr-API.
+      </p>
+
+      <pre><code class="language-javascript">
+// under PAGES i app.js
+
+import { getWeather } from "../utils/weatherUtil.js"; 
+
+app.get("/weather/:city", async (req, res) => {
+    const city = req.params.city;
+    
+    // Serveren HENTER data FØRST
+    const weatherData = await getWeather(city); 
+
+    // Serveren RENDERER siden med data (bruger en Template Engine som EJS)
+    res.render("weather", { 
+        city: city,
+        temp: weatherData.CurrentData.temperature
+    }); 
+});
+      </code></pre>
+
+      <p>
+        <strong>Serveren</strong> modtager JSON-data, fletter dem ind i den
+        valgte <strong>template</strong> (f.eks. <code>weather.ejs</code>) og
+        genererer den **færdige HTML-kode**.
+      </p>
+
+      <h2>3️⃣ Serverens <code>weatherUtil.js</code> henter data fra ekstern API</h2>
+      <p>
+        Dette er den samme fil som før, men nu kaldes den fra
+        **PAGES-routen** (trin 2) i stedet for API-routen.
+      </p>
+
+      <pre><code class="language-javascript">
+// utils/weatherUtil.js
+// ... samme kode som før
+export async function getWeather(city) {
+    const url = `https://vejr.eu/api.php?location=${city}&degree=C`;
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+}
+      </code></pre>
+
+      <h2>4️⃣ Serveren returnerer den færdige HTML-side</h2>
+      <p>
+        Serveren sender kun ét enkelt svar til browseren: den **komplette HTML-side** med alle vejrdata allerede indlejret. 
+        **<code>weather.js</code>**-scriptet er nu enten overflødigt eller bruges kun til at tilføje mindre interaktioner, da det ikke længere skal hente data.
+      </p>
+
+      <pre><code class="language-html">
+<!doctype html>
+<html>
+<body>
+    <h1>Vejret i <%= city %></h1>
+    <p>Temperatur: <span id="temp"><%= temp %></span>°C</p>
+    </body>
+</html>
+      </code></pre>
+      
+      <h2>5️⃣ Browser viser data (straks)</h2>
+      <p>
+        Browseren modtager og viser den færdigrenderede HTML-kode med det samme. Der er **ingen separat API-kald** fra klienten for at få data.
+      </p>
+
+      <br />
+
+      <h2>📘 Samlet flow (kort fortalt for SSR)</h2>
+      
+
+      <table>
+        <thead>
+          <tr>
+            <th>Trin</th>
+            <th>Hvad sker der</th>
+            <th>Hvor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Bruger åbner <code>/weather/københavn</code></td>
+            <td>Client → Server</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Server kalder <code>weatherUtil.js</code> for at hente data</td>
+            <td>Server</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Server kalder ekstern vejr-API</td>
+            <td>Server</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Server rendererer (genererer) færdig HTML-side med data</td>
+            <td>Server</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Server returnerer den **færdige** HTML til browseren</td>
+            <td>Server → Client</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Browser viser data **øjeblikkeligt**</td>
+            <td>Client</td>
+          </tr>
+        </tbody>
+      </table>
+      <br />
+
+      <a class="back" href="/">⬅ Tilbage til opslagstavlen</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-html.min.js"></script>
+  </body>
+</html>
