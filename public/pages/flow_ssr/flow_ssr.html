@@ -2,7 +2,7 @@
 <html lang="da">
   <head>
     <meta charset="UTF-8" />
-    <title>Flow og opbygning - Serverside Rendering (SSR)</title>
+    <title>Flow og opbygning - Serverside Rendering (SSR) med Egen Engine</title>
     <link rel="stylesheet" href="../../assets/css/style.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css"
@@ -11,97 +11,143 @@
   </head>
   <body>
     <div class="content">
-      <h1>Flow og opbygning - Serverside Rendering (SSR)</h1>
+      <h1>Flow og opbygning - SSR Server-side Rendering </h1>
 
       <p>
-        Dette flow beskriver et **Serverside Rendering (SSR)**-princip i en lille
-        vejr-applikation med **Node.js (Express)** og en
-        **Template Engine** (f.eks. EJS). Hele siden, inklusiv vejrdata,
-        genereres på serveren før den sendes til browseren.
+        Med udgangspunkt i en lille vejr applikation
+        <strong>Node.js (Express)</strong>, vil jeg prøve at beskrive
+        opbygningen af applikationen samt hvad sker hvor (client-side og
+        server-side). Denne server-side rendering sker vha en simpel template 
+        engine (`constructPage`), som vi selv har konstrueret. Der kan også benyttes
+        indlæste template engines, som fx EJS (Embedded JavaScript Templating). 
+        Her ved server-side rendering genereres hele siden på serveren, hvor de dynamiske 
+        data erstatter <strong>specialtegn</strong> i HTML-skabelonerne, før siden sendes 
+        til clienten / browseren.
       </p>
       <br />
 
       <h2>1️⃣ Bruger kalder <code>/weather/:city</code></h2>
       <p>
-        Bruger går ind på fx <code>http://localhost:8080/weather/københavn</code>.
-        Denne route håndteres i vores <code>app.js</code> eller en dedikeret
-        **page-router** på serveren.
-      </p>
-
-      <h2>2️⃣ Serveren henter data og genererer HTML</h2>
-      <p>
-        I modsætning til Client-side Rendering sker **al datahentning** på
-        serveren. Serveren kalder først
-        **<code>weatherUtil.js</code>**, som igen kalder den eksterne vejr-API.
+        Bruger går ind på fx <code>http://localhost:8080/weather/københavn</code>. 
+        Denne route håndteres i serverens PAGES-logik.
       </p>
 
       <pre><code class="language-javascript">
-// under PAGES i app.js
-
-import { getWeather } from "../utils/weatherUtil.js"; 
-
-app.get("/weather/:city", async (req, res) => {
-    const city = req.params.city;
-    
-    // Serveren HENTER data FØRST
-    const weatherData = await getWeather(city); 
-
-    // Serveren RENDERER siden med data (bruger en Template Engine som EJS)
-    res.render("weather", { 
-        city: city,
-        temp: weatherData.CurrentData.temperature
-    }); 
-});
+        // app.js (PAGES-delen)
+        app.get("/weather/:city", async (req, res) => {
+        const city = req.params.city;
+        const finalHTML = await weatherPage(city);
+        res.send(finalHTML); // Returner den færdigbyggede HTML-streng
+        });
       </code></pre>
 
+      <h2>2️⃣ Serveren henter data og konstruerer HTML-siden</h2>
       <p>
-        <strong>Serveren</strong> modtager JSON-data, fletter dem ind i den
-        valgte <strong>template</strong> (f.eks. <code>weather.ejs</code>) og
-        genererer den **færdige HTML-kode**.
-      </p>
+        <strong>PAGES-routen</strong> kalder weatherPage() funktionen i
+        <strong>pagesUtil.js</strong> på serveren. Denne funktion står for både 
+        at lave kald til <strong>weatherUtil.js</strong> som henter data fra ekstern API og
+        kalde vores templateEngine, så HTML filen kan samles med korrekt data.
+        </p>
 
-      <h2>3️⃣ Serverens <code>weatherUtil.js</code> henter data fra ekstern API</h2>
+      <pre><code class="language-javascript">
+      // util/pagesUtil.js 
+
+      import { readPage, constructPage } from "./templatingEngine.js";
+      import { getWeather } from "./weatherUtil.js"; 
+
+      // En funktion til at konstruere vejr-siden dynamisk
+      export async function weatherPage(city) {
+          // 1. Her hentes data. Asynkront så koden kører først videre, når vi har data
+          const weatherData = await getWeather(city); 
+
+          // 2. Her indlæses html skabelonens indhold (weather.html) via kald til 
+          // template engine og funktionen readPage(). Det er en html-streng
+          // indeholdende placeholders (her $$CITY_NAME$$ og $$TEMPERATURE$$)
+          const weatherContent = readPage("./public/pages/weather/weather.html");
+          
+          // 3. Konverter hentet data til HTML-strenge
+          const cityTitle = city.charAt(0).toUpperCase() + city.slice(1);
+          const tempValue = weatherData.CurrentData.temperature + "°C";
+
+          // 4. Her erstattes placeholders i html siden med hentet data
+          const contentWithData = weatherContent
+              .replace('$$CITY_NAME$$', cityTitle)
+              .replace('$$TEMPERATURE$$', tempValue);
+
+          // 5. Nu har vi den færdige indholdsstreng (contentWithData), og selve 
+          // den fulde html side skal samles (header + indhold + footer) via kald til 
+          // template engine og funktionen constructPage.
+          return constructPage(contentWithData, { 
+              tabTitle: `Vejret i ${cityTitle}`,
+              cssLinks: `<link rel="stylesheet" href="/pages/weather/weather.css">`
+          }); 
+      }
+      </code></pre>
+
+      <h2> Serverens <code>weatherUtil.js</code> henter data fra ekstern API</h2>
       <p>
-        Dette er den samme fil som før, men nu kaldes den fra
-        **PAGES-routen** (trin 2) i stedet for API-routen.
+        Når funktionen kaldes i trin 2 så igangsætter det datahentningen fra esktern API via 
+        <strong>weatherUtil.js</strong> og funktionen <strong>getWeather()</strong>. 
+        Data returneres til weatherPage(city) i pagesUtil.js som samler det hele.
       </p>
 
       <pre><code class="language-javascript">
-// utils/weatherUtil.js
-// ... samme kode som før
-export async function getWeather(city) {
-    const url = `https://vejr.eu/api.php?location=${city}&degree=C`;
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-}
-      </code></pre>
+      // utils/weatherUtil.js
 
-      <h2>4️⃣ Serveren returnerer den færdige HTML-side</h2>
+      export async function getWeather(city) {
+      const url = `https://vejr.eu/api.php?location=${city}&degree=C`;
+      const response = await fetch(url);
+      const data = await response.json();
+      return data;
+      }
+  
+      </code></pre><br>    
+      <h2> Serverens <code>templateEngine.js</code> muliggør samling af korrekt data</h2>
       <p>
-        Serveren sender kun ét enkelt svar til browseren: den **komplette HTML-side** med alle vejrdata allerede indlejret. 
-        **<code>weather.js</code>**-scriptet er nu enten overflødigt eller bruges kun til at tilføje mindre interaktioner, da det ikke længere skal hente data.
-      </p>
+        Når funktionen kaldes i trin 2, og data modtages fra ekstern API, så sørger kald til 
+        <strong>constructPage()</strong> i <strong>templateEngine.js</strong> for at
+        det er muligt at samle html-siden, hvis man som her fx har opdelt i en header.html, footer.html 
+        samt at content bliver med korrekt dynamisk data i pageContent i den primære html fil, 
+        som her er weather.html.
+      </p>  
 
-      <pre><code class="language-html">
-<!doctype html>
-<html>
-<body>
-    <h1>Vejret i <%= city %></h1>
-    <p>Temperatur: <span id="temp"><%= temp %></span>°C</p>
-    </body>
-</html>
-      </code></pre>
+      <pre><code class="language-javascript">
+      //util/templateEngine.js
+
+      import fs from 'fs';      
+
+      const header = readPage("./public/components/header/header.html");
+      const footer = readPage("./public/components/footer/footer.html");
+
+      export function constructPage(pageContent, options = {}) {
+          return header 
+          .replace('$$TAB_TITLE$$', options.tabTitle || "Vejret")
+          .replace('$$CSS_LINKS$$', options.cssLinks || "")
+          + pageContent
+          + footer;
+      }      
+
+      export function readPage(path) {
+          return fs.readFileSync(path).toString();
+      }
+      </code></pre><br>
+
+      <h2>3️⃣ Serveren returnerer den færdige HTML-side</h2>
+      <p>
+        Serveren sender den komplette HTML-streng, der er blevet samlet i
+        `constructPage` og `weatherPage`. Browseren modtager HTML, hvor de dynamiske data
+        allerede er indsat.
+      </p>
       
-      <h2>5️⃣ Browser viser data (straks)</h2>
+      <h2>4️⃣ Browser viser data (straks)</h2>
       <p>
-        Browseren modtager og viser den færdigrenderede HTML-kode med det samme. Der er **ingen separat API-kald** fra klienten for at få data.
+        Browseren modtager HTML, der er 100% klar. Der er intet JavaScript
+        nødvendigt på klientsiden for at hente eller indsætte data.
       </p>
 
       <br />
 
-      <h2>📘 Samlet flow (kort fortalt for SSR)</h2>
-      
+      <h2>📘 Samlet flow (kort fortalt for SSR med Egen Engine)</h2>
 
       <table>
         <thead>
@@ -124,22 +170,27 @@ export async function getWeather(city) {
           </tr>
           <tr>
             <td>3</td>
-            <td>Server kalder ekstern vejr-API</td>
+            <td>Serveren kalder <code>readPage</code> (egen Engine) for at indlæse html</td>
             <td>Server</td>
           </tr>
           <tr>
             <td>4</td>
-            <td>Server rendererer (genererer) færdig HTML-side med data</td>
+            <td>Serveren erstatter placeholders med data</td>
             <td>Server</td>
           </tr>
           <tr>
             <td>5</td>
-            <td>Server returnerer den **færdige** HTML til browseren</td>
-            <td>Server → Client</td>
+            <td>Serveren kalder <code>constructPage</code> (egen Engine) for at samle den færdige html side</td>
+            <td>Server</td>
           </tr>
           <tr>
             <td>6</td>
-            <td>Browser viser data **øjeblikkeligt**</td>
+            <td>Server returnerer den færdige HTML-streng</td>
+            <td>Server → Client</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>Browser viser data øjeblikkeligt</td>
             <td>Client</td>
           </tr>
         </tbody>
