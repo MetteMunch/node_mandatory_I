@@ -1,23 +1,22 @@
-    <div class="content">
-      <h1>Flow og opbygning - CSR Client-side rendering</h1>
+<div class="content">
+  <h1>Flow og opbygning - CSR Client-side rendering</h1>
 
-      <p>
-        Med udgangspunkt i en lille vejr applikation
-        <strong>Node.js (Express)</strong>, vil jeg prøve at beskrive
-        opbygningen af applikationen samt hvad sker hvor (client-side og
-        server-side).
-      </p>
-      <br />
+  <p>
+    Med udgangspunkt i en lille vejr applikation
+    <strong>Node.js (Express)</strong>, vil jeg prøve at beskrive opbygningen af
+    applikationen samt hvad sker hvor (client-side og server-side).
+  </p>
+  <br />
 
-      <h2>1️⃣ Bruger kalder <code>/weather/:city</code></h2>
-      <p>
-        Bruger går ind på fx
-        <code>http://localhost:8080/weather/københavn</code>. Denne route
-        håndteres i vores app.js under PAGES eller i en særskilt
-        <strong>page-router</strong> js fil på serveren:
-      </p>
+  <h2>1️⃣ Bruger kalder <code>/weather/:city</code></h2>
+  <p>
+    Bruger går ind på fx
+    <code>http://localhost:8080/weather/københavn</code>. Denne route håndteres
+    i vores app.js under PAGES eller i en særskilt
+    <strong>page-router</strong> js fil på serveren:
+  </p>
 
-      <pre><code class="language-javascript">
+  <pre><code class="language-javascript">
     // under PAGES i app.js
 
     app.get("/weather/:city", (req, res) => {
@@ -25,27 +24,27 @@
     });
     </code></pre>
 
-      <p>
-        Serveren returnerer HTML-siden <code>weather.html</code> fra
-        <code>public/pages</code>-mappen.
-      </p>
+  <p>
+    Serveren returnerer HTML-siden <code>weather.html</code> fra
+    <code>public/pages</code>-mappen.
+  </p>
 
-      <h2>2️⃣ Client-side loader <code>weather.js</code></h2>
-      <p>
-        Inde i <code>weather.html</code> indlæses et script, som håndterer
-        klientlogikken. Dette script er også gemt under public, fx i en js
-        folder eller en folder der indeholder alt vedr. "weather" (både html, js
-        og evt specifik css).
-      </p>
+  <h2>2️⃣ Client-side loader <code>weather.js</code></h2>
+  <p>
+    Inde i <code>weather.html</code> indlæses et script, som håndterer
+    klientlogikken. Dette script er også gemt under public, fx i en js folder
+    eller en folder der indeholder alt vedr. "weather" (både html, js og evt
+    specifik css).
+  </p>
 
-      <h2>3️⃣ Scriptet <code>weather.js</code> kalder API'et på serveren</h2>
-      <p>
-        Scriptet kalder <code>`/api/weather/${city}`</code> routen, som enten
-        findes i app.js under API'ER eller i en særskilt
-        <strong>api-router</strong> fil på serveren.
-      </p>
+  <h2>3️⃣ Scriptet <code>weather.js</code> kalder API'et på serveren</h2>
+  <p>
+    Scriptet kalder <code>`/api/weather/${city}`</code> routen, som enten findes
+    i app.js under API'ER eller i en særskilt <strong>api-router</strong> fil på
+    serveren.
+  </p>
 
-      <pre><code class="language-javascript">
+  <pre><code class="language-javascript">
     // weather.js
     document.addEventListener("DOMContentLoaded", async () => {
     const city = window.location.pathname.split("/").pop();
@@ -58,9 +57,9 @@
     });
     </code></pre>
 
-      <h2>4️⃣ Serverens API-route håndterer <code>/api/weather/:city</code></h2>
+  <h2>4️⃣ Serverens API-route håndterer <code>/api/weather/:city</code></h2>
 
-      <pre><code class="language-javascript">
+  <pre><code class="language-javascript">
     //under API i app.js
     
     import { getWeather } from "../utils/weatherUtil.js";
@@ -72,11 +71,9 @@
     });
     </code></pre>
 
-      <h2>
-        5️⃣ Serverens <code>weatherUtil.js</code> henter data fra ekstern API
-      </h2>
+  <h2>5️⃣ Serverens <code>weatherUtil.js</code> henter data fra ekstern API</h2>
 
-      <pre><code class="language-javascript">
+  <pre><code class="language-javascript">
     // utils/weatherUtil.js
 
     export async function getWeather(city) {
@@ -86,53 +83,53 @@
     return data;
     }
     </code></pre>
-      <br />
+  <br />
 
-      <h2>📘 Samlet flow (kort fortalt)</h2>
-      <img src="/assets/images/flow.jpg" alt="flow" /><br />
+  <h2>📘 Samlet flow (kort fortalt)</h2>
+  <img src="/assets/images/flow.jpg" alt="flow" /><br />
 
-      <table>
-        <thead>
-          <tr>
-            <th>Trin</th>
-            <th>Hvad sker der</th>
-            <th>Hvor</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Bruger åbner <code>/weather/københavn</code></td>
-            <td>Client → Server</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Server returnerer <code>weather.html</code></td>
-            <td>Server</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Browser loader <code>weather.js</code></td>
-            <td>Client</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>
-              <code>weather.js</code> kalder <code>/api/weather/københavn</code>
-            </td>
-            <td>Client → Server</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>Server kalder ekstern vejr-API</td>
-            <td>Server</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>Browser viser data</td>
-            <td>Client</td>
-          </tr>
-        </tbody>
-      </table>
-      <br />
-    </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Trin</th>
+        <th>Hvad sker der</th>
+        <th>Hvor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Bruger åbner <code>/weather/københavn</code></td>
+        <td>Client → Server</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Server returnerer <code>weather.html</code></td>
+        <td>Server</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Browser loader <code>weather.js</code></td>
+        <td>Client</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>
+          <code>weather.js</code> kalder <code>/api/weather/københavn</code>
+        </td>
+        <td>Client → Server</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Server kalder ekstern vejr-API</td>
+        <td>Server</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Browser viser data</td>
+        <td>Client</td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
+</div>

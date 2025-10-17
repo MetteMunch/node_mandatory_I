@@ -1,54 +1,53 @@
-    <div class="content">
-      <h1>Package.json</h1>
+<div class="content">
+  <h1>Package.json</h1>
 
-      <p>
-        Package.json er ligesom en opskrift for projektets afhængigheder og kan
-        også indeholde andre metadata plus eventuelle scripts.
-      </p>
-      <br />
+  <p>
+    Package.json er ligesom en opskrift for projektets afhængigheder og kan også
+    indeholde andre metadata plus eventuelle scripts.
+  </p>
+  <br />
 
-      <p>
-        package.json kan oprettes manuelt ude i roden af projektet (der hvor
-        også serveren / app.js ligger), og fx bare indeholde:
-      </p>
+  <p>
+    package.json kan oprettes manuelt ude i roden af projektet (der hvor også
+    serveren / app.js ligger), og fx bare indeholde:
+  </p>
 
-      <pre><code class="language-javascript">{
+  <pre><code class="language-javascript">{
       "dependencies": {
       "express": "^5.1.0"
       },
       "type": "module"
       }
       </code></pre>
-      <p>Eller man kan oprette den ved kommandoen:</p>
-      <pre><code class="language-javascript">npm init</code></pre>
+  <p>Eller man kan oprette den ved kommandoen:</p>
+  <pre><code class="language-javascript">npm init</code></pre>
 
-      <p>
-        Denne kommando opretter automatisk en package.json fil, hvor der skal
-        svares på en masse spørgsmål i forhold til metadata.
-      </p>
-      <p>Efter oprettelse så kør:</p>
-      <pre><code class="language-javascript">npm install</code></pre>
+  <p>
+    Denne kommando opretter automatisk en package.json fil, hvor der skal svares
+    på en masse spørgsmål i forhold til metadata.
+  </p>
+  <p>Efter oprettelse så kør:</p>
+  <pre><code class="language-javascript">npm install</code></pre>
 
-      <p>
-        Så indlæses fra NPM registry de moduler og undermoduler som er
-        nødvendige i forhold til de angivne afhængigheder / dependencies i
-        package.json filen. Disse pakker placeres i mappen node_modules/ og
-        samtidig oprettes package-lock.json filen. Hvis der efterfølgende skal
-        tilføjes en ny afhægighed, så kan dette indskrives direkte i
-        package.json filen, hvorefter der igen køres en npm install. Eller ved
-        direkte at køre npm install "dependency_name".
-      </p>
+  <p>
+    Så indlæses fra NPM registry de moduler og undermoduler som er nødvendige i
+    forhold til de angivne afhængigheder / dependencies i package.json filen.
+    Disse pakker placeres i mappen node_modules/ og samtidig oprettes
+    package-lock.json filen. Hvis der efterfølgende skal tilføjes en ny
+    afhægighed, så kan dette indskrives direkte i package.json filen, hvorefter
+    der igen køres en npm install. Eller ved direkte at køre npm install
+    "dependency_name".
+  </p>
 
-      <p><a href="/server">Se mere i noterne om Server</a></p>
-      <br />
+  <p><a href="/server">Se mere i noterne om Server</a></p>
+  <br />
 
-      <pre><code class="language-javascript">evt code-snippet</code></pre>
+  <pre><code class="language-javascript">evt code-snippet</code></pre>
 
-      <p>Gode dokumentationssider:</p>
-      <div class="doc-links">
-        <a href="evt link" target="_blank" rel="noopener noreferrer"
-          >titel på link</a
-        >
-      </div>
-    </div>
-
+  <p>Gode dokumentationssider:</p>
+  <div class="doc-links">
+    <a href="evt link" target="_blank" rel="noopener noreferrer"
+      >titel på link</a
+    >
+  </div>
+</div>

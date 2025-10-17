@@ -1,27 +1,27 @@
-    <div class="content">
-      <h1>Funktioner</h1>
-      <h2>Almindelig funktion:</h2>
-      <pre><code class="language-javascript">function rollDice(min, max) {
+<div class="content">
+  <h1>Funktioner</h1>
+  <h2>Almindelig funktion:</h2>
+  <pre><code class="language-javascript">function rollDice(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }</code></pre>
 
-      <h2>Anonym funktion:</h2>
-      <pre><code class="language-javascript">const rollAnotherDice = function (min, max) {
+  <h2>Anonym funktion:</h2>
+  <pre><code class="language-javascript">const rollAnotherDice = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }</code></pre>
 
-      <h2>Arrow function:</h2>
-      <pre><code class="language-javascript">const rollYetAnotherDice = (min, max) => {
+  <h2>Arrow function:</h2>
+  <pre><code class="language-javascript">const rollYetAnotherDice = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }</code></pre>
 
-      <h2>Callback function:</h2>
-      <p>
-        En callback funktion er en funktion, der videregives som et argument til
-        en anden funktion og er beregnet til måske at blive eksekveret senere. I
-        nedenstående er <code>congrats()</code> en callback funktion.
-      </p>
-      <pre><code class="language-javascript">function guessTheNumber(luckyNumber, congrats) {
+  <h2>Callback function:</h2>
+  <p>
+    En callback funktion er en funktion, der videregives som et argument til en
+    anden funktion og er beregnet til måske at blive eksekveret senere. I
+    nedenstående er <code>congrats()</code> en callback funktion.
+  </p>
+  <pre><code class="language-javascript">function guessTheNumber(luckyNumber, congrats) {
   const numberFromDice = rollDice(1, 6);
 
   if (luckyNumber === numberFromDice) {
@@ -33,6 +33,4 @@
 function congrats(number) {
   return `Jubiii you gussed correct with number: ${number}`;
 }</code></pre>
-    </div>
-
-  
+</div>
