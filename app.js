@@ -1,5 +1,7 @@
 import express from "express";
 import path from "path";
+import fs from "fs";
+import { readPage, constructPage } from "./utils/templateEngine.js";
 
 const app = express();
 
@@ -9,17 +11,29 @@ app.use(express.static("public"));
 
 // Forside
 app.get("/", (req, res) => {
-  res.sendFile(path.resolve("public/pages/frontend/index.html"));
+  const pagePath = path.resolve("public/pages/frontend/index.html");
+  const pageContent = readPage(pagePath);
+  const fullPage = constructPage(pageContent, {
+    tabTitle: "Opslagstavle",
+    includeFooter: false,
+  });
+  res.send(fullPage);
 });
 
-// Undersider
+//Dynamiske undersider
 app.get("/:page", (req, res) => {
-  const filePath = path.resolve(
-    `public/pages/${req.params.page}/${req.params.page}.html`,
-  );
-  res.sendFile(filePath, (err) => {
-    if (err) res.status(404).send("Siden findes ikke");
-  });
+  const page = req.params.page;
+  const pagePath = path.resolve(`public/pages/${page}/${page}.html`);
+
+  // Tjek om siden findes
+  if (!fs.existsSync(pagePath)) {
+    res.status(404).send("Siden findes ikke");
+    return;
+  }
+
+  const pageContent = readPage(pagePath);
+  const fullPage = constructPage(pageContent, { tabTitle: page });
+  res.send(fullPage);
 });
 
 const PORT = 8080;

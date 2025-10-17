@@ -1,110 +1,97 @@
-<!doctype html>
-<html lang="da">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Loops</title>
-    <link rel="stylesheet" href="../../assets/css/style.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div class="content">
-      <h1>Loops</h1>
-      <p>
-        Der findes flere forskellige metoder at loope (iterere) igennem en liste
-        på. Hvilken der er mest optimal afhænger af det ønskede resultat. Husk
-        at bruge en loop metode medmindre det ønskede resultat kan findes ved at
-        tælle på fingrene! Brug som udgangspunkt kun et almindeligt for-loop,
-        hvis vi ikke skal have fat i hver eneste element i listen, men fx hver
-        anden eller hvis vi præcis ved, hvor mange elementer, som vi vil iterere
-        igennem.
-      </p>
+<div class="content">
+  <h1>Loops</h1>
+  <p>
+    Der findes flere forskellige metoder at loope (iterere) igennem en liste på.
+    Hvilken der er mest optimal afhænger af det ønskede resultat. Husk at bruge
+    en loop metode medmindre det ønskede resultat kan findes ved at tælle på
+    fingrene! Brug som udgangspunkt kun et almindeligt for-loop, hvis vi ikke
+    skal have fat i hver eneste element i listen, men fx hver anden eller hvis
+    vi præcis ved, hvor mange elementer, som vi vil iterere igennem.
+  </p>
 
-      <h2>.forEach</h2>
-      <p>Looper igennem hele listen, men returnerer ikke en ny liste.</p>
+  <h2>.forEach</h2>
+  <p>Looper igennem hele listen, men returnerer ikke en ny liste.</p>
 
-      <h2>.map</h2>
-      <p>Looper igennem hele listen, og returnerer en ny liste.</p>
+  <h2>.map</h2>
+  <p>Looper igennem hele listen, og returnerer en ny liste.</p>
 
-      <h2>.filter</h2>
-      <p>
-        Looper igennem hele listen, og returnerer en ny liste baseret på de
-        elementer, som har klaret betingelserne.
-      </p>
+  <h2>.filter</h2>
+  <p>
+    Looper igennem hele listen, og returnerer en ny liste baseret på de
+    elementer, som har klaret betingelserne.
+  </p>
 
-      <h2>.find</h2>
-      <p>
-        Looper igennem listen indtil den finder det første element, som opfylder
-        betingelsen. Dette element returneres og loopet stopper.
-      </p>
+  <h2>.find</h2>
+  <p>
+    Looper igennem listen indtil den finder det første element, som opfylder
+    betingelsen. Dette element returneres og loopet stopper.
+  </p>
 
-      <h2>.reduce</h2>
-      <p>
-        Bruges til at reducere et array til en enkelt værdi eller sammentælling
-        af værdier ved at udføre en funktion på hvert element i arrayet.
-      </p>
+  <h2>.reduce</h2>
+  <p>
+    Bruges til at reducere et array til en enkelt værdi eller sammentælling af
+    værdier ved at udføre en funktion på hvert element i arrayet.
+  </p>
 
-      <h2>.indexOf</h2>
-      <p>
-        Bruges til at finde indekstallet af et givent element i arrayet. Selvom
-        elementet måske findes flere steder, så er det kun det første indekstal,
-        der returneres, hvorefter loopet stopper. Hvis elementet slet ikke
-        findes, så returneres -1.
-      </p>
-      <br />
+  <h2>.indexOf</h2>
+  <p>
+    Bruges til at finde indekstallet af et givent element i arrayet. Selvom
+    elementet måske findes flere steder, så er det kun det første indekstal, der
+    returneres, hvorefter loopet stopper. Hvis elementet slet ikke findes, så
+    returneres -1.
+  </p>
+  <br />
 
-      <h2>Kodeeksempler</h2>
-      <p>Med udgangspunkt i et array "participaters" bestående af objekter:</p>
-      <p>
-        [{name: 'John', fee: 250, paid: false},<br />
-        {name: 'Mette', fee: 250, paid: false},<br />
-        {name: 'Ingrid', fee: 250, paid: true},<br />
-        {name: 'Peter', fee: 250, paid: true},<br />
-        {name: 'Kalle', fee: 250, paid: false}]
-      </p>
+  <h2>Kodeeksempler</h2>
+  <p>Med udgangspunkt i et array "participaters" bestående af objekter:</p>
+  <p>
+    [{name: 'John', fee: 250, paid: false},<br />
+    {name: 'Mette', fee: 250, paid: false},<br />
+    {name: 'Ingrid', fee: 250, paid: true},<br />
+    {name: 'Peter', fee: 250, paid: true},<br />
+    {name: 'Kalle', fee: 250, paid: false}]
+  </p>
 
-      <h3>.filter</h3>
-      <p>
-        Hvis vi ønsker en ny liste kun med dem, der ikke her betalt, så kan vi
-        fx bruge .filter:
-      </p>
-      <pre><code class="language-javascript">const listNotPaidYet = participaters.filter(p => p.paid === false);</code></pre>
+  <h3>.filter</h3>
+  <p>
+    Hvis vi ønsker en ny liste kun med dem, der ikke her betalt, så kan vi fx
+    bruge .filter:
+  </p>
+  <pre><code class="language-javascript">const listNotPaidYet = participaters.filter(p => p.paid === false);</code></pre>
 
-      <h3>.forEach</h3>
-      <p>
-        Hvis vi i den oprindelige liste ønsker at hæve fee med 50 kr, så kan vi
-        fx bruge .forEach:
-      </p>
-      <pre><code class="language-javascript">participaters.forEach(p => {
+  <h3>.forEach</h3>
+  <p>
+    Hvis vi i den oprindelige liste ønsker at hæve fee med 50 kr, så kan vi fx
+    bruge .forEach:
+  </p>
+  <pre><code class="language-javascript">participaters.forEach(p => {
       p.fee += 50;
       });</code></pre>
 
-      <h3>.map</h3>
-      <p>
-        Hvis vi ønsker at lave en ny liste, hvor der er tilføjet et ekstra
-        datasæt til alle objekterne, så kan vi fx bruge .map.
-      </p>
-      <p>
-        Eftersom vi skal have alt nuværende indhold med, så vil vi også benytte
-        (...) spread operator, som netop kopierer alle egenskaber (key:value
-        par) fra objektet til et nyt objekt.
-      </p>
-      <pre><code class="language-javascript">const newListExtraData = participaters.map(p => {
+  <h3>.map</h3>
+  <p>
+    Hvis vi ønsker at lave en ny liste, hvor der er tilføjet et ekstra datasæt
+    til alle objekterne, så kan vi fx bruge .map.
+  </p>
+  <p>
+    Eftersom vi skal have alt nuværende indhold med, så vil vi også benytte
+    (...) spread operator, som netop kopierer alle egenskaber (key:value par)
+    fra objektet til et nyt objekt.
+  </p>
+  <pre><code class="language-javascript">const newListExtraData = participaters.map(p => {
       return {...p, statusActive: true};
       });</code></pre>
-      <br />
+  <br />
 
-      <h3>.reduce</h3>
-      <p>
-        Hvis vi fx ønsker at sammentælle, hvor mange der samlet har betalt og
-        hvor mange der ikke har betalt, så kan vi benytte reduce(). Reduce
-        metoden tager en accumulator metode ind som parameter, som køres på alle
-        elementer, og denne returnerer i sidste ende et array med objekter, der
-        viser paidCount og unpaidCount.
-      </p>
-      <pre><code class="language-javascript">const paymentStatus = participaters.reduce(
+  <h3>.reduce</h3>
+  <p>
+    Hvis vi fx ønsker at sammentælle, hvor mange der samlet har betalt og hvor
+    mange der ikke har betalt, så kan vi benytte reduce(). Reduce metoden tager
+    en accumulator metode ind som parameter, som køres på alle elementer, og
+    denne returnerer i sidste ende et array med objekter, der viser paidCount og
+    unpaidCount.
+  </p>
+  <pre><code class="language-javascript">const paymentStatus = participaters.reduce(
     (accumulator, p) => {
         if (p.paid) {
             accumulator.paidCount++;
@@ -115,12 +102,5 @@
     },
     { paidCount: 0, unpaidCount: 0 
     });</code></pre>
-      <br />
-
-      <a class="back" href="/">⬅ Tilbage til opslagstavlen</a>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
-  </body>
-</html>
+  <br />
+</div>
