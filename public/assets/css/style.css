@@ -145,7 +145,8 @@ code[class*="language-"] {
   margin: 10px 0;
 }
 
-.doc-links a {
+.doc-links a,
+a.doc-links {
   color: #0074d9;
   text-decoration: none;
   font-weight: bold;

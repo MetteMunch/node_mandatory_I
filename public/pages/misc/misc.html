@@ -17,8 +17,8 @@
   <h2>Middleware</h2>
   <p>
     Kan tænkes som hjælpe-funktioner, der kører mellem request fra klienten og
-    response fra serveren, og disse er tilgængelige via Express frameworket. Et
-    eksempel på en Middleware funktion er:
+    response fra serveren, og disse er tilgængelige via Express frameworket. <br>
+    Eksempler på Middleware funktioner er:
   </p>
 
   <pre><code class="language-javascript">app.use(express.static("public"));</code></pre>
@@ -26,5 +26,13 @@
   <p>
     Denne sikrer, at statiske filer fra den angivne mappe (her ”public”), bliver
     tilgængelige direkte, så der ikke skal angives en route for hver af disse.
+  </p>
+
+  <pre><code class="language-javascript">app.use(express.json());</code></pre>
+
+  <p>
+    Denne sikrer at data i requests (req.body i POST og PUT requests) bliver læst som 
+    en en JSON-streng. Express parsen nemlig ikke automatisk anmodningens body, og vil
+    returnere <strong>undefined</strong>, hvis ikke dette middleware benyttes.
   </p>
 </div>
