@@ -36,8 +36,6 @@ app.get("/:page", (req, res) => {
   res.send(fullPage);
 });
 
-/*====================== PAGES ============================*/
-
 const PORT = 8080;
 app.listen(PORT, () => {
   console.log("Server is running on port: ", PORT);
