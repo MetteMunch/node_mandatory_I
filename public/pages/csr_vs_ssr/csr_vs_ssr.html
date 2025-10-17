@@ -1,0 +1,56 @@
+<div class="content">
+  <h1>CSR vs SSR</h1>
+
+  <table>
+    <thead>
+        <tr>
+            <th>Parameter</th>
+            <th>CSR - Client-side Rendering</th>
+            <th>SSR - Server-side Rendering</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Load time</strong></td>
+            <td>Langsommere end SSR ved første load af applikation, da browseren 
+                skal downloade, parse og eksekvere JS for at bygge DOM'en
+            </td>
+            <td>Hurtigere end CSR. Serveren genererer færdig HTML og sender til
+                browser, så hurtig visning (initial load time).
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Ressourcer</strong></td>
+            <td>Her er det klienten (browseren) som gør arbejdet med (rendering og 
+                og datahentning), så tungt specielt ved initial load. 
+            </td>
+            <td>Her er det serveren som henter data og genererer en ny HTML ved hver request.
+            </td>
+        </tr>
+        <tr>
+            <td><strong>SEO</strong></td>
+            <td>Dårlig medmindre der laves en speciel opsætning.
+            </td>
+            <td>God til SEO, da alt indhold er klar ved load og nemt kan indekseres.
+            </td>
+        </tr>
+        <tr>
+            <td><strong>CORS</strong></td>
+            <td>API-kald sker i browseren direkte til ekstern API. Browser håndhæver
+                CORS, så hvis ikke der er konfigureret korrekt kan fetch kald fejle.
+            </td>
+            <td>API kald sker server til server, så CORS er ikke et problem.
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+  
+
+  <p>Se mere her i min noter om henholdsvis CSR og SSR:</p>
+  <div class="doc-links">
+    <a href="/flow_csr">CSR - Client-side rendering</a>
+    <a href="/flow_ssr">SSR - Server-side rendering</a>
+    
+  </div>
+</div>
